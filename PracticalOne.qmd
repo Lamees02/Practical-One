@@ -1,0 +1,47 @@
+---
+title: "PracticalOne"
+format: html
+---
+
+Question 1
+
+```{r}
+#Find rows with missing values
+missing <- airquality[rowSums(is.na(airquality)) >0, ]
+missing
+```
+
+Question 2
+
+```{r}
+#Mean Values
+mean(airquality$Ozone, na.rm = TRUE)
+mean(airquality$Temp, na.rm = TRUE)
+#Standard Deviations
+sd(airquality$Ozone, na.rm = TRUE)
+sd(airquality$Temp, na.rm = TRUE)
+#Minimums
+min(airquality$Ozone, na.rm = TRUE)
+min(airquality$Temp, na.rm = TRUE)
+#Maximums
+max(airquality$Ozone, na.rm = TRUE)
+max(airquality$Temp, na.rm = TRUE)
+```
+
+Question 3
+
+```{r}
+#Response Variable
+Y <- cars$dist
+#Design Matrix
+X <- cbind(1, cars$speed)
+#Parameter Estimates
+b_hat <- solve( t(X) %*% (X) ) %*% t(X) %*% Y
+b_hat
+```
+
+Question 4
+
+```{r}
+lm(Y ~ cars$speed)
+```
