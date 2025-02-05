@@ -27,6 +27,7 @@ min(airquality$Temp, na.rm = TRUE)
 max(airquality$Ozone, na.rm = TRUE)
 max(airquality$Temp, na.rm = TRUE)
 ```
+hg
 
 Question 3
 
