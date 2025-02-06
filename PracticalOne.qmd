@@ -3,46 +3,49 @@ title: "PracticalOne"
 format: html
 ---
 
-Question 1
-
+# Question 1
+## Find rows with missing values
 ```{r}
-#Find rows with missing values
 missing <- airquality[rowSums(is.na(airquality)) >0, ]
 missing
 ```
 
-Question 2
+# Question 2
+## Summary Statistics for Ozone
+```{r}
+mean(airquality$Ozone, na.rm = TRUE)
+sd(airquality$Ozone, na.rm = TRUE)
+min(airquality$Ozone, na.rm = TRUE)
+max(airquality$Ozone, na.rm = TRUE)
+```
+
+## Summary Statistics for Temperature
 
 ```{r}
-#Mean Values
-mean(airquality$Ozone, na.rm = TRUE)
 mean(airquality$Temp, na.rm = TRUE)
-#Standard Deviations
-sd(airquality$Ozone, na.rm = TRUE)
 sd(airquality$Temp, na.rm = TRUE)
-#Minimums
-min(airquality$Ozone, na.rm = TRUE)
 min(airquality$Temp, na.rm = TRUE)
-#Maximums
-max(airquality$Ozone, na.rm = TRUE)
 max(airquality$Temp, na.rm = TRUE)
 ```
 
 
-Question 3
-
+# Question 3
+## Response Variable
 ```{r}
-#Response Variable
 Y <- cars$dist
-#Design Matrix
+```
+## Design Matrix
+```{r}
 X <- cbind(1, cars$speed)
-#Parameter Estimates
+```
+## Parameter Estimates
+```{r}
 b_hat <- solve( t(X) %*% (X) ) %*% t(X) %*% Y
 b_hat
 ```
 
-Question 4
-
+# Question 4
+## Linear Model using built-in function
 ```{r}
 lm(Y ~ cars$speed)
 ```
