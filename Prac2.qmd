@@ -1,0 +1,75 @@
+---
+title: "Prac 2"
+format: html
+editor: visual
+---
+
+# Question 1
+
+## Generating Simulated Data
+
+```{r}
+x <- 1:100
+e <- rnorm(100, mean = 0, sd = 0.2 )
+y <- sin(x / 10) + e
+```
+
+# Question 2
+
+## Implementing the Lowess Algorithm
+
+```{r}
+customLowess <- function(x, y, f){
+  #span
+  n <- length(x)
+  k <- ceiling(f * n)
+  y_predicted <- numeric(n)
+  
+  for(i in 1:100){
+    distance <- abs(x - x[i])
+    neighbours <- order(distance)[1:k]
+    
+    #compute weights
+    dmax <- max(distance[neighbours])
+    weights <- (1 - (distance[neighbours] / dmax)^3)^3
+    weights[distance[neighbours] >= dmax] <- 0
+    
+    #weighted regression
+    X <- cbind(1, x[neighbours])
+    W <- diag(weights)
+    b_hat <- solve(t(X) %*% W %*% X) %*% (t(X) %*% W %*% y[neighbours])
+    y_predicted[i] <- b_hat[1] + b_hat[2] * x[i]
+  }
+  
+  return(y_predicted)
+}
+```
+
+# Question 3
+
+## Comparing with Built-in Function
+
+### Built in Function
+
+```{r}
+#Built in
+bi_lowess <- lowess(x, y, f = 0.1, iter = 0)
+```
+
+### Custom Lowess Function
+
+```{r}
+#Custom Function
+custom_lowess <- customLowess(x, y, f = 0.1)
+```
+
+### Plotting Both Curves
+
+```{r}
+plot(x, y, col = "grey", pch = 16, main = "Lowess Comparison", xlab = "x", ylab = "y")
+#Built in
+lines(bi_lowess, col = "green", lwd = 3)
+#Custom
+lines(custom_lowess, col = "violet", lwd = 3, lty = 2)
+legend("topright", legend = c("Custom Lowess", "Built-in Lowess"), col = c("violet", "green"), lty = c(2, 1), lwd = 2)
+```
